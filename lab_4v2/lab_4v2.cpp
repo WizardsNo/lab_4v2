@@ -9,7 +9,7 @@ using namespace std;
 
 enum type_error
 {
-	ERROR_ALLOCATION_MEMORY,
+	ERROR_ALLOCATION_MEMORY,   
 	SUCCESS_ALLOCATION_MEMORY,
 
 	ERROR_OPEN_STREAM,
@@ -24,14 +24,14 @@ enum type_error
 
 void free_memory(int **&matrix, int row)//--очистка памяти
 {
-	if (matrix == NULL) return;//--если матрица пустая то завершить функцию 
+	if (matrix == NULL) return;//-----------если матрица пустая то завершить функцию 
 
-	for (int i = 0; i < row; i++)//--перебор элементов
-		delete[] matrix[i];//--удаление текущего элемента
+	for (int i = 0; i < row; i++)//---------перебор элементов
+		delete[] matrix[i];//---------------удаление текущего элемента
 
-	delete[] matrix;//---удаление массива
+	delete[] matrix;//----------------------удаление массива
 
-	matrix = NULL;//--- присвоение нулевого указателя. NULL-макрос препроцессора
+	matrix = NULL;//------------------------присвоение нулевого указателя. NULL-макрос препроцессора
 }
 
 type_error aloc_mem(int **&matrix, int row, int col, int *error_row = NULL)//-- выделение памяти
@@ -60,9 +60,9 @@ type_error correct_element(const string filename, int **&matrix, int &row, int &
 {
 	fstream stream;
 
-	stream.open(filename, ios::in);//открываем файл в поток. ios::in-чтение
+	stream.open(filename, ios::in);//--открываем файл в поток. ios::in-чтение
 
-	if (!stream.is_open())//--проверка открытия файла
+	if (!stream.is_open())//-----------проверка открытия файла
 	{
 		row = 0;
 		col = 0;
@@ -70,10 +70,10 @@ type_error correct_element(const string filename, int **&matrix, int &row, int &
 	}
 
 	int a;
-	int m = 0, n = 0;//-- m — колонка, n — строчка
+	int m = 0, n = 0;//-- m — колонка, n — строчка 9999999999
 	int k = 0;
 
-	int index = 0;//666
+	int index = 0;
 	char c = 0;
 
 	char lseek;
@@ -81,13 +81,13 @@ type_error correct_element(const string filename, int **&matrix, int &row, int &
 
 	while (b)
 	{
-		stream >> ws;//--удаление начальных пробелов
+		stream >> ws;//-------------удаление начальных пробелов
 
 		if (stream.eof()) break;//--проверка конца файла
 
-		index = stream.tellg();//запись текущей позиции чтения
-		stream >> a;//--извлекаем символ из потока
-		lseek = stream.peek();//--смотрим на следуещий символ в потоке
+		index = stream.tellg();//---запись текущей позиции чтения
+		stream >> a;//--------------извлекаем символ из потока
+		lseek = stream.peek();//----смотрим на следуещий символ в потоке
 
 		if ((stream.fail() && !stream.eof()) || (lseek != ' ' && lseek != '\t' && lseek != '\n' && lseek != EOF))
 		{   //                                                                            --fail() — возвращает true, если установлен failbit (значит, что произошла какая-то не фатальная ошибка);
