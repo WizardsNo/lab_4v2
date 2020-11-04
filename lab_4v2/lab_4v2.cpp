@@ -293,7 +293,7 @@ int main()
 
 		do
 		{
-			cout << "Задайте строку и столбцев: ";
+			cout << "Задайте число: ";
 			cin >> stroka;
 
 			if (cin.peek() == 10) break;
