@@ -194,7 +194,7 @@ void matrix_copy(int **&matrix, int **matrix_source, int col, int row)
 
 type_error matrix_processing(int **&matrix, int row, int col, int str)
 {
-	if (row != col || (str > row || str < 0 ) || matrix == NULL) return ERROR_PROCESSING_MATRIX;
+	if (str < 0 || matrix == NULL) return ERROR_PROCESSING_MATRIX;
 
 	int com = 1, max = 0;
 
