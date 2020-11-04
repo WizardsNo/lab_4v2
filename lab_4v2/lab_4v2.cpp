@@ -192,26 +192,39 @@ void matrix_copy(int **&matrix, int **matrix_source, int col, int row)
 			matrix[i][j] = matrix_source[i][j];
 }
 
-type_error matrix_processing(int **&matrix, int row, int col, int str, int cl)
+type_error matrix_processing(int **&matrix, int row, int col, int str)
 {
-	if (row != col || (str > row || str < 0 || cl > col || cl < 0) || matrix == NULL) return ERROR_PROCESSING_MATRIX;
+	if (row != col || (str > row || str < 0 ) || matrix == NULL) return ERROR_PROCESSING_MATRIX;
 
-	int Sum = 0;
+	int com = 1, max = 0;
 
-	for (int i = 0; i < col; i++) Sum += matrix[str][i];
-	for (int i = 0; i < row; i++) Sum += matrix[i][cl];
+	for (int i = 0; i < col; i++) {
+		for (int a = 0; a < row; ) {
+			com = com * matrix[a][i];
+			//cout << com <<endl;
+			if (max < matrix[a][i])
+			{
+				max = matrix[a][i];
+			}
+			a++;
+			if ( a == row)
+			{
+				if (com < str)
+				{
+					for (int a = 0; a < row; a++) {
+						if (max != matrix[a][i])
+						{
+							matrix[a][i] += max;
+						}
+					}
 
-	for (int i = 0; i < row; i++)
-	{
-		if (i == str) continue;
-
-		for (int j = 0; j < col; j++)
-		{
-			if (j == cl) continue;
-
-			matrix[i][j] = Sum;
+				}
+			}
 		}
+		max = 0;
+		com = 1;
 	}
+	
 
 	return SUCCESS_PROCESSING_MATRIX;
 }
@@ -281,7 +294,7 @@ int main()
 		do
 		{
 			cout << "Задайте строку и столбцев: ";
-			cin >> stroka >> stolbec;
+			cin >> stroka;
 
 			if (cin.peek() == 10) break;
 
@@ -290,10 +303,17 @@ int main()
 		} while (true);
 
 
-		if (matrix_processing(math_2_copy, row, col, stroka, stolbec) == SUCCESS_PROCESSING_MATRIX)
+		if (matrix_processing(math_2_copy, row, col, stroka) == SUCCESS_PROCESSING_MATRIX)
 		{
 			cout << "Новая матрица:" << endl;
 			matrix_console(math_2_copy, row, col);
+		}
+		else
+		{
+			if (matrix_processing(math_2_copy, row, col, stroka) == ERROR_PROCESSING_MATRIX)
+			{
+				cout << "Ошибка: некоректные данные!" << endl;
+			}
 		}
 	}
 
